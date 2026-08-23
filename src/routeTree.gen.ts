@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CalisthenicsRouteImport } from './routes/calisthenics'
 import { Route as RunningRouteImport } from './routes/running'
+import { Route as SummaryRouteImport } from './routes/summary'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const RunningRoute = RunningRouteImport.update({
   path: '/running',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SummaryRoute = SummaryRouteImport.update({
+  id: '/summary',
+  path: '/summary',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/calisthenics': typeof CalisthenicsRoute
   '/running': typeof RunningRoute
+  '/summary': typeof SummaryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/calisthenics': typeof CalisthenicsRoute
   '/running': typeof RunningRoute
+  '/summary': typeof SummaryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/calisthenics': typeof CalisthenicsRoute
   '/running': typeof RunningRoute
+  '/summary': typeof SummaryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/calisthenics' | '/running'
+  fullPaths: '/' | '/auth' | '/calisthenics' | '/running' | '/summary'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/calisthenics' | '/running'
-  id: '__root__' | '/' | '/auth' | '/calisthenics' | '/running'
+  to: '/' | '/auth' | '/calisthenics' | '/running' | '/summary'
+  id: '__root__' | '/' | '/auth' | '/calisthenics' | '/running' | '/summary'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CalisthenicsRoute: typeof CalisthenicsRoute
   RunningRoute: typeof RunningRoute
+  SummaryRoute: typeof SummaryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RunningRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/summary': {
+      id: '/summary'
+      path: '/summary'
+      fullPath: '/summary'
+      preLoaderRoute: typeof SummaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CalisthenicsRoute: CalisthenicsRoute,
   RunningRoute: RunningRoute,
+  SummaryRoute: SummaryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
